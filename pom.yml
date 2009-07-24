@@ -1,0 +1,53 @@
+groupId: optional
+artifactId: "optional_${scala.version}"
+name: optional
+version: 1.0
+url: "git://github.com/DRMacIver/optional.git"
+organization:
+  name: DR MacIver
+description: Java Command-Line Arguments
+properties:
+  java.src.version: 1.6
+  project.build.sourceEncoding: UTF-8
+profiles:
+  - activation:
+      activeByDefault: true
+    id: Scala-2.7.5
+    properties:
+      scala.version: 2.7.5
+  - id: Scala-2.8.0-SNAPSHOT
+    properties:
+      scala.version: 2.8.0-SNAPSHOT
+repositories:
+  - { id: scala-tools.org, name: Scala-Tools Maven2 Release Repository, url: "http://scala-tools.org/repo-releases" }
+  - id: snapshots.scala-tools.org
+    name: Scala-Tools Maven2 Snapshot Repository
+    url: "http://scala-tools.org/repo-snapshots"
+    snapshots:
+      enabled: true
+      updatePolicy: never
+      checksumPolicy: fail
+    releases:
+      enabled: true
+      updatePolicy: never
+      checksumPolicy: fail
+pluginRepositories:
+  - { id: scala-tools.org, name: Scala-Tools Maven2 Repository, url: "http://scala-tools.org/repo-releases" }
+  - { id: twdata-m2-repository, name: twdata.org Maven 2 Repository, url: "http://twdata-m2-repository.googlecode.com/svn/" }
+dependencies:
+  - { groupId: org.scala-lang, artifactId: scala-library, version: "${scala.version}" }
+  - { groupId: org.scala-lang, artifactId: scala-compiler, version: "${scala.version}" }
+  - { groupId: com.thoughtworks.paranamer, artifactId: paranamer, version: 2.0 }
+build:
+  sourceDirectory: src/main/scala
+  directory: "target-${scala.version}"
+  resources:
+    - { directory: resources }
+  plugins:
+    - groupId: org.scala-tools
+      artifactId: maven-scala-plugin
+      executions:
+        - goals: [ compile, testCompile ]
+reporting:
+  plugins:
+    - { groupId: org.scala-tools, artifactId: maven-scala-plugin }
